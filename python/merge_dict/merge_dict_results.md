@@ -5,7 +5,7 @@
 ![img](./benchmark_results.png)
 ![img](./benchmark_results_standard_lib.png)
 
-We have been discussing various methods of merging Python dictionaries and testing their performance. The methods we've been comparing are:
+We are discussing various methods of merging Python dictionaries and testing their performance. The methods we've been comparing are:
 
 - `update()`
 - Dictionary Comprehension
@@ -48,29 +48,7 @@ Pandas is significantly slower. It's not designed for this specific task, and it
 
 In conclusion, while each method has its own use cases, `update()` is the most efficient for merging dictionaries, especially when performance is a concern. The benefits are most noticeable when dealing with a large number of dictionaries with fewer keys, as in Dataset 1. If a new dictionary is needed and you are using Python 3.9+, the union operator (|) is a good alternative due to its simplicity and readability.
 
-## 1st benchmark results (archived code) and deep analysis
-
-Results of 4 executions of the same benchmark.
-
-| Method                | Execution 1 (s) | Execution 2 (s) | Execution 3 (s) | Execution 4 (s) |
-|-----------------------|-----------------|-----------------|-----------------|-----------------|
-| update()              | 0.2988          | 0.3234          | 0.3056          | 0.2874          |
-| Dictionary Comprehension | 0.7252          | 0.7075          | 0.7318          | 0.7167          |
-| Unpacking (**)        | 0.3314          | 0.3567          | 0.3296          | 0.3351          |
-| union                 | 0.3339          | 0.3432          | 0.3282          | 0.3223          |
-| Pandas                | 4.1233          | 3.8576          | 3.8797          | 3.9674          |
-
-Now, averaging and sorting these results, we get:
-
-| Method                   | Time (s) |
-|--------------------------|----------|
-| update()                 | 0.3038   |
-| union                    | 0.3319   |
-| Unpacking (**)           | 0.3382   |
-| Dictionary Comprehension | 0.7203   |
-| Pandas                   | 3.9570   |
-
-### Deep analysis time complexity and more:
+### Analysis and time complexity:
 
 All of these methods have a linear time complexity, O(n), as they involve a full traversal of the input data. However, they differ in terms of their overheads and low-level operations, which contribute to the differences in their running times.
 
@@ -127,3 +105,28 @@ When a program calls malloc(), the memory management system needs to find a bloc
 The `free()` function can also have variable time complexity, depending on the memory management system's strategy for merging freed blocks with their neighbors to reduce fragmentation. This can involve searching through lists of blocks, which could potentially have linear time complexity.
 
 Overall, while `malloc()` and `free()` can have constant time complexity in certain conditions, their actual performance can vary widely depending on various factors. The details of memory allocation and deallocation are complex and go beyond the usual scope of Big-O notation, which is a high-level abstraction used for analyzing algorithmic complexity.
+
+
+## 1st benchmark results (archived code)
+
+TODO: review and compare with results above
+
+Results of 4 executions of the same benchmark.
+
+| Method                | Execution 1 (s) | Execution 2 (s) | Execution 3 (s) | Execution 4 (s) |
+|-----------------------|-----------------|-----------------|-----------------|-----------------|
+| update()              | 0.2988          | 0.3234          | 0.3056          | 0.2874          |
+| Dictionary Comprehension | 0.7252          | 0.7075          | 0.7318          | 0.7167          |
+| Unpacking (**)        | 0.3314          | 0.3567          | 0.3296          | 0.3351          |
+| union                 | 0.3339          | 0.3432          | 0.3282          | 0.3223          |
+| Pandas                | 4.1233          | 3.8576          | 3.8797          | 3.9674          |
+
+Now, averaging and sorting these results, we get:
+
+| Method                   | Time (s) |
+|--------------------------|----------|
+| update()                 | 0.3038   |
+| union                    | 0.3319   |
+| Unpacking (**)           | 0.3382   |
+| Dictionary Comprehension | 0.7203   |
+| Pandas                   | 3.9570   |
