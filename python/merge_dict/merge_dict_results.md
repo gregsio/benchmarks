@@ -1,7 +1,5 @@
 # Python merge dictionaries benchmark
 
-## Putting it all together 
-
 ![img](./benchmark_results.png)
 ![img](./benchmark_results_standard_lib.png)
 
