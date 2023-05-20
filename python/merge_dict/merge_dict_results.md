@@ -106,7 +106,7 @@ Now, sorting these results, we get:
     Dictionary Comprehension: 0.7203 seconds
     Pandas: 3.9570 seconds
 
-Now let's delve into a deep analysis of these results:
+### Now let's delve into a deep analysis of these results:
 
 All of these methods are linear time complexity, O(n), because they each involve a full traversal of the input data. However, they differ in terms of their overheads and the low-level operations they perform, which contributes to the differences in their running times.
 
@@ -130,7 +130,7 @@ malloc() and free() are functions in the C programming language that programmers
     malloc(): The malloc() function stands for "memory allocation". It is used to dynamically allocate a single large block of memory with the specified size. It initializes each block with a default garbage value. This function returns a pointer of type void which can be cast into a pointer of any form. It takes the size (in bytes) of memory that needs to be allocated. If the space is insufficient, allocation fails and returns a NULL pointer.
 
 
-### Here's an example of malloc() usage:
+#### Here's an example of malloc() usage:
 
 ```
 int *ptr;
