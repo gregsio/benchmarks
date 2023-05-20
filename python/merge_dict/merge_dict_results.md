@@ -149,3 +149,19 @@ free(ptr);
 This code releases the block of memory pointed to by ptr for future use.
 
 These functions are essential in C and C++ programming, where the programmer has direct control over memory management. In higher-level languages like Python, memory management is handled automatically by the interpreter or runtime environment, but under the hood, similar mechanisms are at work when you create or delete objects. However, it's important to note that improper usage of malloc() and free() can lead to issues like memory leaks and dangling pointers, which are common sources of bugs in C and C++ programs.
+
+#### Time complexity for malloc and free()
+
+In a simple and idealized model, the time complexity for malloc() and free() can be considered as constant time, O(1), meaning the time to perform these operations doesn't depend on the size of the memory being managed.
+
+However, in practice, the actual time complexity of malloc() and free() depends on the implementation of the memory management system in the runtime environment and the operating system, as well as the state of the memory (for instance, how fragmented it is).
+
+When a program calls malloc(), the memory management system needs to find a block of memory large enough to satisfy the request. The time it takes to find such a block can depend on several factors:
+
+    The size of the request: For small sizes, memory managers often keep pools of fixed-size blocks ready to go, which can be allocated with constant time complexity. For larger sizes, the memory manager might need to search through a list of free blocks, which could take time proportional to the number of free blocks (linear time complexity).
+
+    The state of the memory: If the memory is heavily fragmented, it might take longer to find a free block of the right size, even if there's enough total free memory.
+
+The free() function can also have variable time complexity, depending on the memory management system's strategy for merging freed blocks with their neighbors to reduce fragmentation. This can involve searching through lists of blocks, which could potentially have linear time complexity.
+
+Overall, while malloc() and free() can have constant time complexity in certain conditions, their actual performance can vary widely depending on various factors. The details of memory allocation and deallocation are complex and go beyond the usual scope of Big-O notation, which is a high-level abstraction used for analyzing algorithmic complexity.
