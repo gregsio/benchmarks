@@ -1,3 +1,59 @@
+
+# Python merge dictionaries benchmark
+
+
+## Putting it all togehter 
+
+![img](./benchmark_results.png)
+![img](./benchmark_results_standard_lib.png)
+
+
+We have been discussing various methods of merging Python dictionaries and testing their performance. The methods we've been comparing are:
+
+    update()
+    Dictionary Comprehension
+    Unpacking (**)
+    Union (|) (Python 3.9+)
+    Using pandas
+
+We created two different datasets for benchmarking these methods:
+
+Dataset 1:
+This dataset has a larger number of dictionaries, with each dictionary having smaller contents. Each dictionary in the dataset contains 100 keys and their corresponding values are random, with the values either being an integer, a string, or an object.
+
+Dataset 2:
+This dataset has fewer dictionaries (1/10th of the first dataset), but each dictionary has a larger number of keys (1000 keys). All keys are strings and the corresponding values are random floats.
+
+Here are the average times recorded from benchmarking with the two datasets:
+Method	Dataset 1 (seconds)	Dataset 2 (seconds)
+update	0.00326	0.00076
+union	0.00439	0.00074
+dict comprehension	0.00667	0.00137
+unpacking	0.01068	0.00137
+pandas	0.06797	1.17701
+
+From these results, the update() method consistently performed the best. Let's go into a detailed analysis.
+
+1. Update Method:
+This method performed the best for both datasets. This can be attributed to the fact that update() is a built-in Python method implemented in C, which provides significant performance benefits. It's implemented in such a way that it modifies the dictionary in-place, reducing the need for additional memory allocation. It's also worth mentioning that update() performs a direct system call to the malloc() and free() functions, bypassing the need for a Python interpreter and thus reducing overhead. The time complexity of this operation is generally O(1) for each key-value pair added.
+
+2. Union (|) Method:
+This method, introduced in Python 3.9, provides a simple and readable syntax for merging dictionaries. However, it performs slightly worse than update(), which could be due to it creating a new dictionary instead of updating in place.
+
+3. Dictionary Comprehension:
+This method was slightly slower than update() and union(). A dictionary comprehension involves more Python-level operations (like iteration and key/value assignments), which makes it slower than the other two. Also, it generates a new dictionary, leading to extra memory allocation.
+
+4. Unpacking (**):
+This method was the slowest among the standard library methods. While it's a neat trick, it creates a new dictionary and involves Python-level iteration and assignments, which slows it down.
+
+5. Using pandas:
+Pandas is the slowest by a large margin. This is because pandas is not designed for this specific task and its DataFrame structure is much more complex and versatile than a simple dictionary. The conversion from dictionaries to a DataFrame and back to a dictionary adds significant overhead.
+
+In conclusion, while each method has its own use cases, update() is the most efficient for merging dictionaries, especially when performance is a concern. The benefits are most noticeable when dealing with a large number of dictionaries with fewer keys, as in Dataset 1. If a new dictionary is needed and you are using Python 3.9+, the union operator (|) is a good alternative due to its simplicity and readability.
+
+
+## 1st benchmark results (archived code) and deep analysis
+
 Results of 4 executions of the same benchmark.
 
 update: 0.2988493709708564 seconds
